@@ -26,7 +26,7 @@ const Post = ({post, setCurrentId }) => {
     }
 
   return (
-    <Card>
+    <Card raised elevation={6}>
         <CardMedia image={post.selectedFile} title={post.title} component={'img'}/>
         <div>
             <Typography variant='h6'>{post.name}</Typography>
