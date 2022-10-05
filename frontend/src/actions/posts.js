@@ -1,5 +1,5 @@
 import * as api from '../api';
-import { FETCH_ALL, FETCH_SINGLE_POST, UPDATE, FETCH_BY_SEARCH, CREATE, DELETE, START_LOADING, END_LOADING } from '../constants/actionTypes';
+import { FETCH_ALL, COMMENT, FETCH_SINGLE_POST, UPDATE, FETCH_BY_SEARCH, CREATE, DELETE, START_LOADING, END_LOADING } from '../constants/actionTypes';
 
 export const getSinglePost = (id) => async (dispatch) => {
     try {
@@ -38,12 +38,12 @@ export const getPostBySearch = (searchQuery) => async (dispatch) => {
     }
 }
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, history) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })        
         const { data } = await api.createPost(post);
         dispatch({type: CREATE, payload: data})
-        dispatch({ type: END_LOADING })
+        history.push(`/posts/${data._id}`)
     } catch (error) {
         console.log(error.message)
     }
@@ -72,6 +72,17 @@ export const likePost = (id) => async (dispatch) => {
     try {
         const { data } = await api.likePost(id);
         dispatch({type: UPDATE, payload: data})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const commentPost = (value, id) => async (dispatch) => {
+    try {
+        const {data} = await api.comment(value, id)
+        dispatch({type: COMMENT, payload: data})
+
+        return data.comments;
     } catch (error) {
         console.log(error)
     }

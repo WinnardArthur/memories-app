@@ -1,4 +1,4 @@
-import { FETCH_ALL, FETCH_SINGLE_POST, FETCH_BY_SEARCH, UPDATE, CREATE, DELETE, START_LOADING, END_LOADING } from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_SINGLE_POST, FETCH_BY_SEARCH, COMMENT, UPDATE, CREATE, DELETE, START_LOADING, END_LOADING } from '../constants/actionTypes';
 
 export default (state = {isLoading: true, posts: []}, action) => {
     switch (action.type) {
@@ -15,6 +15,17 @@ export default (state = {isLoading: true, posts: []}, action) => {
             };
         case FETCH_BY_SEARCH:
             return { ...state, posts: action.payload };
+        case COMMENT:
+            return {
+                ...state,
+                posts: state.posts.map((post) => {
+                    if(post._id === action.payload._id) {
+                        return action.payload 
+                    }
+
+                    return post;
+                })
+            }
         case FETCH_SINGLE_POST:
             return { ...state, post: action.payload }
         case CREATE:

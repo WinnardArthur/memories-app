@@ -4,7 +4,7 @@ export const DELETE = 'DELETE';
 export const FETCH_ALL = 'FETCH_ALL';
 export const FETCH_SINGLE_POST = 'FETCH_SINGLE_POST';
 export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
-
+export const COMMENT  = 'COMMENT';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 

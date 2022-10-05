@@ -3,7 +3,8 @@ import { Paper, Typography, Divider, CircularProgress } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory } from 'react-router-dom';
-import { getSinglePost } from '../../actions/posts';
+import { getSinglePost, getPostBySearch } from '../../actions/posts';
+import CommentSection from './commentSection';
 
 const PostDetails = () => {
     const { posts, post, isLoading } = useSelector(state => state.posts);
@@ -15,6 +16,12 @@ const PostDetails = () => {
         dispatch(getSinglePost(id))
     }, [id])
 
+    useEffect(() => {
+        if(post) {
+            dispatch(getPostBySearch({search: 'none', tags: post?.tags.join(',')}))
+        }
+    }, [post])
+
     if(!post) return null;
 
     if(isLoading) {
@@ -23,7 +30,10 @@ const PostDetails = () => {
         </Paper>
     }
 
-    console.log((post.tags));
+    const recommendedPosts = posts.filter(({_id}) => _id !== post._id)
+
+    const openPost = (_id) => history.push(`/post/${_id}`)
+
     return (
         <Paper elevation={6} style={{padding: '20px', borderRadius: '15px' }}>
             <div>
@@ -34,13 +44,30 @@ const PostDetails = () => {
                     <Typography variant='h6'>Created by: {post.name}</Typography>
                     <Typography variant='body1'>{moment(post.createdAt).fromNow()}</Typography>
                     <Divider style={{margin: '20px 0'}} />
-                    <Typography variant='body1'><strong>Realtime Chat - coming soon!</strong></Typography>
+                    <CommentSection post={post}/>
                     <Divider style={{margin: '20px 0'}} />
                 </div>
                 <div>
                     <img src={post.selectedFile} />
                 </div>
             </div>
+            {recommendedPosts.length > 0 && (
+                <div>
+                    <Typography gutterBottom variant='h5'>You might also like:</Typography>
+                    <Divider />
+                    <div>
+                        {recommendedPosts.map(({ title, message, name, likes, selectedFile, _id}) => (
+                          <div style={{margin: '20px', cursor: 'pointer'}} onClick={() => openPost(_id)} key={_id}>
+                            <Typography gutterBottom variant='h6'>{title}</Typography>
+                            <Typography gutterBottom variant='subtitle2'>{name}</Typography>
+                            <Typography gutterBottom variant='subtitle2'>{message}</Typography>
+                            <Typography gutterBottom variant='subtitle1'>Likes: {likes.length}</Typography>
+                            <img src={selectedFile} width='200px' />
+                          </div>  
+                        ))}
+                    </div>
+                </div>
+            )}
         </Paper>
     )
 }
