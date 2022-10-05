@@ -7,9 +7,11 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts';
+import { useHistory } from 'react-router-dom';
 
 const Post = ({post, setCurrentId }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = JSON.parse(localStorage.getItem('profile'))
 
     const Likes = () => {
@@ -23,6 +25,10 @@ const Post = ({post, setCurrentId }) => {
         }
 
         return <><ThumbUpAltOutlined fontSize='small'/>&nbsp;Like</>
+    }
+
+    const openPost = () => {
+        history.push(`/posts/${post._id}`)
     }
 
   return (
