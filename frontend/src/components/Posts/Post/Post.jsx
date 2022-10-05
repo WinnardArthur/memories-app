@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Card, CardActions, CardContent, CardMedia, Button } from '@material-ui/core';
+import { Typography, Card, CardActions, ButtonBase, CardContent, CardMedia, Button } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -27,36 +27,38 @@ const Post = ({post, setCurrentId }) => {
 
   return (
     <Card raised elevation={6}>
-        <CardMedia image={post.selectedFile} title={post.title} component={'img'}/>
-        <div>
-            <Typography variant='h6'>{post.name}</Typography>
-            <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
-        </div>
-        {(user?.result?.googleId || user?.result?._id) === post?.creator &&
+        <ButtonBase onClick={openPost}>
+            <CardMedia image={post.selectedFile} title={post.title} component={'img'}/>
             <div>
-                <Button style={{color: 'white'}} size='small' onClick={() => setCurrentId(post._id)}>
-                    <MoreHorizIcon fontSize='default' />
-                </Button>
+                <Typography variant='h6'>{post.name}</Typography>
+                <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
             </div>
-        }
-        <div>
-            <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
-        </div>
-        <CardContent>
-            <Typography variant='h5' gutterBottom>{post.title}</Typography>
-            <Typography variant='body2' component='p' color='textSecondary' gutterBottom>{post.message}</Typography>
-        </CardContent>
-        <CardActions>
-            <Button size='small' color='primary' disabled={!user?.result} onClick={() => {dispatch(likePost(post._id))}}>
-                <Likes />
-            </Button>
             {(user?.result?.googleId || user?.result?._id) === post?.creator &&
-                <Button size='small' color='primary' onClick={() => {dispatch(deletePost(post._id))}}>
-                    <DeleteIcon fontSize='small'/>
-                    Delete 
-                </Button>
+                <div>
+                    <Button style={{color: 'white'}} size='small' onClick={() => setCurrentId(post._id)}>
+                        <MoreHorizIcon fontSize='default' />
+                    </Button>
+                </div>
             }
-        </CardActions>
+            <div>
+                <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
+            </div>
+            <CardContent>
+                <Typography variant='h5' gutterBottom>{post.title}</Typography>
+                <Typography variant='body2' component='p' color='textSecondary' gutterBottom>{post.message}</Typography>
+            </CardContent>
+            <CardActions>
+                <Button size='small' color='primary' disabled={!user?.result} onClick={() => {dispatch(likePost(post._id))}}>
+                    <Likes />
+                </Button>
+                {(user?.result?.googleId || user?.result?._id) === post?.creator &&
+                    <Button size='small' color='primary' onClick={() => {dispatch(deletePost(post._id))}}>
+                        <DeleteIcon fontSize='small'/>
+                        Delete 
+                    </Button>
+                }
+            </CardActions>
+        </ButtonBase>
     </Card>
   )
 }
