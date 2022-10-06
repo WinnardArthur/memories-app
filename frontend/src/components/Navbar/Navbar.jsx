@@ -36,15 +36,15 @@ const Navbar = () => {
     }
 
   return (
-    <AppBar position='static' color='inherit' className={classes.appBar}>
+    <AppBar position='sticky' color='inherit' className={classes.appBar}>
         <div className={classes.brandContainer}>
-            <Typography component={Link} to='/' variant='h2' align='center'>Stories</Typography>
+            <Typography component={Link} to='/' variant='h3' align='center'>Stories</Typography>
             <img src={stories} alt='Stories' className={`${classes.img} w-10 h-10`}/>
         </div>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
             {user ? (
-                <div>
-                    <Avatar src={user.result.imageUrl} alt={user.result.name} />
+                <div className={classes.profile}>
+                    <Avatar src={user.result.imageUrl} alt={user.result.name} className={classes.purple}>{user?.result.name.charAt(0).toUpperCase()}</Avatar>
                     <Typography variant='h6'>{user.result.name}</Typography>
                     <Button variant='contained' color='secondary' onClick={logout}>Logout</Button>
                 </div>

@@ -8,14 +8,14 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts';
 import { useHistory, Link } from 'react-router-dom';
+import useStyles from './styles';
 
 const Post = ({post, setCurrentId }) => {
     const [likes, setLikes] = useState(post?.likes);
     const dispatch = useDispatch();
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('profile'));
-
-
+    const classes = useStyles();
     const userId = user?.result?.googleId || user?.result?._id;
     const hasLiked = post?.likes.find((like) => like === userId);
 
@@ -49,28 +49,28 @@ const Post = ({post, setCurrentId }) => {
     }
 
   return (
-    <Card raised elevation={6}>
-        <Link onClick={openPost}>
-            <CardMedia image={post.selectedFile} title={post.title} component={'img'}/>
-            <div>
+    <Card className={classes.card} raised elevation={6}>
+        <div  className={classes.cardAction}>
+            <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} component={'img'}/>
+            <div className={classes.overlay}>
                 <Typography variant='h6'>{post.name}</Typography>
                 <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
             </div>
             {(user?.result?.googleId || user?.result?._id) === post?.creator &&
-                <div>
+                <div className={classes.overlay2}>
                     <Button style={{color: 'white'}} size='small' onClick={() => setCurrentId(post._id)}>
                         <MoreHorizIcon fontSize='default' />
                     </Button>
                 </div>
             }
-            <div>
+            <div className={classes.details}>
                 <Typography variant='body2' color='textSecondary'>{post.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
+            <Typography onClick={openPost} variant='h5' className={classes.title} gutterBottom>{post.title}</Typography>
             <CardContent>
-                <Typography variant='h5' gutterBottom>{post.title}</Typography>
                 <Typography variant='body2' component='p' color='textSecondary' gutterBottom>{post.message}</Typography>
             </CardContent>
-            <CardActions>
+            <CardActions className={classes.cardActions}>
                 <Button size='small' color='primary' disabled={!user?.result} onClick={handleLike}>
                     <Likes />
                 </Button>
@@ -81,7 +81,7 @@ const Post = ({post, setCurrentId }) => {
                     </Button>
                 }
             </CardActions>
-        </Link>
+        </div>
     </Card>
   )
 }

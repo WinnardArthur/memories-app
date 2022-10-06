@@ -4,10 +4,13 @@ import FileBase from 'react-file-base64';
 import {useDispatch, useSelector} from 'react-redux'; 
 import { useHistory } from 'react-router-dom';
 import { createPost, updatePost } from '../../actions/posts';
+import useStyles from './styles'
+
 
 const Form = ({ currentId, setCurrentId }) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const classes = useStyles();
     const post = useSelector((state) => currentId ? 
         state.posts.posts.find((p) => p._id === currentId) : null)
     const user = JSON.parse(localStorage.getItem('profile'))
@@ -49,8 +52,8 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (
-        <Paper elevation={6}>
-            <form autoComplete='off' noValidate onSubmit={handleSubmit}>
+        <Paper elevation={6} classeName={classes.paper}>
+            <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant='h6' align='center' className='py-4 '>{currentId ? 'Editing' : 'Creating'} a Memory</Typography>
                 <TextField 
                     name='title' 
@@ -76,13 +79,14 @@ const Form = ({ currentId, setCurrentId }) => {
                     value={postData.tags}
                     onChange={(e) => setPostData({...postData, tags: e.target.value.split(',')})}       
                 />
-                <div>
+                <div style={{padding: '5px 0', width: '94%'}}>
                     <FileBase 
                         type='file'
                         multiple={false}
                         onDone={({base64}) => setPostData({...postData, selectedFile: base64})}
+                        className={classes.fileInput}
                     />
-                    <Button variant='contained' size='large' type='submit' fullWidth color='primary'>Submit</Button>
+                    <Button variant='contained' className={classes.buttonSubmit} size='large' type='submit' fullWidth color='primary'>Submit</Button>
                     <Button variant='contained' size='small' onClick={clear} fullWidth color='secondary'>Clear</Button>
                 </div>
             </form>
