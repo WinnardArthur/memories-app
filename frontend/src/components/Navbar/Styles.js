@@ -23,10 +23,13 @@ export default makeStyles((theme) => ({
     img: {
         marginLeft: '10px',
         borderRadius: '50%',
+        width: 40,
+        height: 40,
     },
     brandContainer: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        textDecoration: 'none',
     },
     toolbar: {
         display: 'flex',

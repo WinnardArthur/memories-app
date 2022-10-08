@@ -1,4 +1,4 @@
-import Reacti, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Pagination, PaginationItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';

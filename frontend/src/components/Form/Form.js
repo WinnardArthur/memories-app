@@ -52,7 +52,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (
-        <Paper elevation={6} classeName={classes.paper}>
+        <Paper elevation={6} className={classes.paper}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant='h6' align='center' className='py-4 '>{currentId ? 'Editing' : 'Creating'} a Memory</Typography>
                 <TextField 

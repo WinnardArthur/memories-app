@@ -38,13 +38,13 @@ const Navbar = () => {
   return (
     <AppBar position='sticky' color='inherit' className={classes.appBar}>
         <div className={classes.brandContainer}>
-            <Typography component={Link} to='/' variant='h3' align='center'>Stories</Typography>
-            <img src={stories} alt='Stories' className={`${classes.img} w-10 h-10`}/>
+            <Typography component={Link} to='/' variant='h3' align='center' style={{textDecoration: 'none'}}>Stories</Typography>
+            <img src={stories} alt='Stories' className={`${classes.img}`}/>
         </div>
         <Toolbar className={classes.toolbar}>
             {user ? (
                 <div className={classes.profile}>
-                    <Avatar src={user.result.imageUrl} alt={user.result.name} className={classes.purple}>{user?.result.name.charAt(0).toUpperCase()}</Avatar>
+                    <Avatar src={user.result.picture} alt={user.result.name} className={classes.purple}>{user?.result.name.charAt(0).toUpperCase()}</Avatar>
                     <Typography variant='h6'>{user.result.name}</Typography>
                     <Button variant='contained' color='secondary' onClick={logout}>Logout</Button>
                 </div>
