@@ -19,15 +19,15 @@ app.use('/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+// Production
 if (process.env.NODE_ENV === 'production') {
     let __dirname = path.resolve();
 
-    app.use(express.static(path.join(__dirname + "frontend/build")))
+    app.use(express.static(path.join(__dirname, "frontend/build")))
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, "frontend/build/index.html"))
     })
-
 } else {
     app.get("/", (req, res) => {
         res.send("API running successfully...")
