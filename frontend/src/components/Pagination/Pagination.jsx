@@ -15,6 +15,8 @@ const Paginate = ({ page }) => {
         if(page) dispatch(getPost(page));
     }, [page])
 
+    console.log('pages', numberOfPages)
+
     return (
         <Pagination
             className={classes.ul}

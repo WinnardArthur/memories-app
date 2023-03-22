@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://memories-app-xn71.onrender.com/'})
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://memories-app-xn71.onrender.com/' : 'http://localhost:5000'
+
+const API = axios.create({ baseURL })
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {

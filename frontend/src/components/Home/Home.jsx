@@ -7,7 +7,7 @@ import { getPostBySearch } from '../../actions/posts';
 import Paginate from '../Pagination/Pagination';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
-import useStyles from './styles'
+import useStyles from './styles';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
